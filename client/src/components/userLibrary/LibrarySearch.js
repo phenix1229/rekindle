@@ -46,9 +46,9 @@ function LibrarySearch() {
     return (
         <form onSubmit={onSubmit}>
             {current ? <h2 className="text-primary">Edit Contact</h2> : <h2 className="text-primary">Find A Book</h2>}
-            <input type="text" placeholder="Name" name="name" value={name} onChange={onChange} />
-            <input type="email" placeholder="Email" name="email" value={email} onChange={onChange} />
-            <input type="text" placeholder="Phone" name="phone" value={phone} onChange={onChange} />
+            <input type="text" placeholder="Author" name="author" value={name} onChange={onChange} />
+            <input type="email" placeholder="Title" name="title" value={email} onChange={onChange} />
+            
             <div>
                 <input type="submit" value={current ? "Update Contact" : "Search"} className="btn btn-primary btn-block" />
             </div>
