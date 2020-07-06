@@ -1,6 +1,14 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext} from 'react';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 function Register() {
+    const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+
+    const {setAlert} = alertContext;
+    const {register} = authContext;
+
     const [user, setUser] = useState({
         name:'',
         email:'',
@@ -14,6 +22,11 @@ function Register() {
 
     const onSubmit = e => {
         e.preventDefault();
+        register({
+            name,
+            email,
+            password
+        })
     }
 
     return (
@@ -32,13 +45,13 @@ function Register() {
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input type="text" name="password" value={password} onChange={onChange} />
+                <input type="password" name="password" value={password} onChange={onChange} />
             </div>
             <div className="form-group">
                 <label htmlFor="password2">Confirm Password</label>
                 <input type="password" name="password2" value={password2} onChange={onChange} />
             </div>
-            <input type="submit" value="Register" className="btn btn-primary btn-block" />
+            <input type="submit" value="Register" className="btn btn-primary btn-block" onClick={onSubmit} />
         </form>
             
         </div>

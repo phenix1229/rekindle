@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Library = require('../models/Library');
 const {check, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-//@route    POST api/users
-//@desc     Register a user
-//access    Public
+//register route
 router.post('/', 
 [
     check('name', 'Name is required')
@@ -41,10 +40,20 @@ async (req, res) => {
 
         user.password = await bcrypt.hash(password, salt);
 
-        await user.save();
+        await user.save()
+            .then(user => {
+                    library = new Library();
+                    library.owner = user.id;
+                    library.save();
+                }
+            );
+
         const payload = {
             user: {
                 id: user.id
+            },
+            library: {
+                id: library.id
             }
         }
 
@@ -52,6 +61,7 @@ async (req, res) => {
             expiresIn:360000
         }, (err, token) => {
             if(err) throw err;
+            console.log(token)
             res.json({token})
         } )
     } catch (err) {

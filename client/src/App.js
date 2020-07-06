@@ -1,6 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
+// import store from './store';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Alerts from './components/layout/Alerts';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -12,6 +15,7 @@ import './App.css';
 
 const App = () => {
   return (
+    // <Provider store={store}>
     <AuthState>
     <ContactState>
     <AlertState>
@@ -26,11 +30,14 @@ const App = () => {
           <Route exact path = '/login' component={Login} />
         </Switch>
       </div>
+      <Footer />
     </>
     </Router>
     </AlertState>
     </ContactState>
     </AuthState>
+    
+    // </Provider>
   );
 }
 

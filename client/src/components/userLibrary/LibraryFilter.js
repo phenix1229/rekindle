@@ -1,7 +1,7 @@
 import React, {useRef, useContext, useEffect} from 'react';
 import ContactContext from '../../context/contact/contactContext';
 
-function ContactFilter() {
+function LibraryFilter() {
     const contactContext = useContext(ContactContext);
     const {filterContacts, clearFilter, filtered} = contactContext;
     const text = useRef('');
@@ -27,4 +27,4 @@ function ContactFilter() {
     )
 }
 
-export default ContactFilter
+export default LibraryFilter
