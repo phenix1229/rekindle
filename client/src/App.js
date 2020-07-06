@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 // import store from './store';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Alerts from './components/layout/Alerts';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -29,11 +30,13 @@ const App = () => {
           <Route exact path = '/login' component={Login} />
         </Switch>
       </div>
+      <Footer />
     </>
     </Router>
     </AlertState>
     </ContactState>
     </AuthState>
+    
     // </Provider>
   );
 }
