@@ -1,15 +1,15 @@
 import React, {useState, useContext, useEffect} from 'react';
 import ContactContext from '../../context/contact/contactContext';
 
-function LibrarySearch() {
+function BookSearch() {
     const contactContext = useContext(ContactContext);
     const {addContact, current, clearCurrent, updateContact} = contactContext
 
     useEffect(() => {
         if(current !== null){
-            setContact(current)
+            setSearch(current)
         } else {
-            setContact({
+            setSearch({
                 name: '',
                 email: '',
                 phone: '',
@@ -18,7 +18,7 @@ function LibrarySearch() {
         }
     }, [contactContext, current])
 
-    const [contact, setContact] = useState({
+    const [search, setSearch] = useState({
         name: '',
         email: '',
         phone: '',
@@ -27,7 +27,7 @@ function LibrarySearch() {
 
     const {author, title} = search;
 
-    const onChange = e => setSearch({...contact, [e.target.name]: e.target.value})
+    const onChange = e => setSearch({...search, [e.target.name]: e.target.value})
     
     const clearAll = () => {
         clearCurrent();
@@ -36,9 +36,9 @@ function LibrarySearch() {
     const onSubmit = e => {
         e.preventDefault();
         if(current === null){
-            addContact(contact);  
+            addContact(search);  
         } else {
-            updateContact(contact);
+            updateContact(search);
         }
         clearAll();
     }
@@ -57,4 +57,4 @@ function LibrarySearch() {
     )
 }
 
-export default LibrarySearch
+export default BookSearch;
