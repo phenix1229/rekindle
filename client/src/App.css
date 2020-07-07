@@ -385,6 +385,13 @@ table th {
   margin-right: 0.6rem;
 }
 
+.footer {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  padding: 15px 0px 15px 30px;
+}
+
 /* Animation (Add After) */
 .item-enter {
   opacity: 0;
