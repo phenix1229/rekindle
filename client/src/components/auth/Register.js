@@ -1,13 +1,8 @@
-import React, {useState, useContext} from 'react';
-import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {register} from '../../actions/authActions';
 
-function Register() {
-    const alertContext = useContext(AlertContext);
-    const authContext = useContext(AuthContext);
-
-    const {setAlert} = alertContext;
-    const {register} = authContext;
+const Register = ({register}) => {
 
     const [user, setUser] = useState({
         name:'',
@@ -57,5 +52,8 @@ function Register() {
         </div>
     )
 }
+const mapStateToProps = state => ({
+    auth: state.authReducer
+})
 
-export default Register
+export default connect(mapStateToProps, {register})(Register)

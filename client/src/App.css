@@ -390,6 +390,8 @@ table th {
   position: absolute;
   bottom: 0px;
   padding: 15px 0px 15px 30px;
+  border-top: 1px solid rgba(231, 197, 247, .5);
+  width: 100vw;
 }
 
 /* Animation (Add After) */
