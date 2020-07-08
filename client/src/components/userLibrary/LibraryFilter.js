@@ -22,6 +22,7 @@ function LibraryFilter() {
 
     return (
         <form>
+            <h2 className="text-primary">Library</h2>
             <input ref={text} type="text" placeholder="Search your library..." onChange={onChange} />
         </form>
     )
