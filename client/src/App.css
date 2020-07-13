@@ -410,6 +410,13 @@ table th {
   transition: opacity 1000ms ease-in;
 }
 
+.bookList {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  overflow: scroll;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .hide-sm {

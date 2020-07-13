@@ -1,22 +1,22 @@
 import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {filterBooks, clearFilter} from '../../store/actions/bookActions';
 
-function LibraryFilter() {
-    // const contactContext = useContext(ContactContext);
-    // const {filterContacts, clearFilter, filtered} = contactContext;
+function LibraryFilter({books:{filtered}}, filterBooks, clearFilter) {
     const text = useRef('');
 
     useEffect(() => {
-        // if(filtered === null){
-        //     text.current.value = '';
-        // };
+        if(filtered === null){
+            text.current.value = '';
+        };
     })
 
     const onChange = e => {
-        // if(text.current.value !== ''){
-        //     filterContacts(e.target.value);
-        // } else {
-        //     clearFilter();
-        // }
+        if(text.current.value !== ''){
+            filterBooks(e.target.value);
+        } else {
+            clearFilter();
+        }
     };
 
     return (
@@ -27,4 +27,8 @@ function LibraryFilter() {
     )
 }
 
-export default LibraryFilter
+const mapStateToProps = (state) => ({
+    books: state.bookReducer
+});
+
+export default connect(mapStateToProps, {filterBooks, clearFilter})(LibraryFilter);

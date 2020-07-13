@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {removeBook, setCurrent, addBook} from '../../store/actions/bookActions';
 
 
-const BookItem = ({ auth:{user}, book, removeBook, setCurrent}) => {
+const BookItem = (book, {removeBook, setCurrent}) => {
     const {id, title, author, text} = book;
-    const desc = text.slice(0, 30);
+    // const desc = text.slice(0, 30);
 
     const onRemove = () => {
         removeBook(id);
@@ -18,13 +18,13 @@ const BookItem = ({ auth:{user}, book, removeBook, setCurrent}) => {
             </h3>
             <ul className="list">
                 <li>{author}</li>
-                <li>{desc}</li>
+                <li>{text}</li>
             </ul>
             <p>
-                {user.library.includes(id) ? 
-                    <button className="btn btn-dark btn-sm" onClick={() => setCurrent(book)}>Read</button> :
-                    <button className="btn btn-dark btn-sm" onClick={() => addBook(book)}>Add</button>}
-                {user.library.includes(id) && <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>}
+                 
+                    
+                    <button className="btn btn-dark btn-sm" onClick={() => addBook(book)}>Add</button>
+                <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>
             </p>
         </div>
     )
