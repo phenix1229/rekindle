@@ -28,6 +28,7 @@ export default (state = initialState, action) => {
                 loading: false
             }
         case REGISTER_FAIL:
+        case AUTH_ERROR:
             localStorage.removeItem('token');
             return {
                 ...state,
@@ -40,15 +41,9 @@ export default (state = initialState, action) => {
         case USER_LOADED:
             return {
                 ...state,
-                filtered: state.contacts.filter(contact => {
-                    const regex = new RegExp(`${action.payload}`, 'gi');
-                    return contact.name.match(regex) || contact.email.match(regex);
-                })
-            }
-        case AUTH_ERROR:
-            return {
-                ...state,
-                contacts: state.contacts.map(contact => contact.id === action.payload.id ? action.payload : contact)
+                isAuthenticated: true,
+                loading: false,
+                user: action.payload
             }
         case LOGIN_SUCCESS:
             return {

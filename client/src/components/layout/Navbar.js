@@ -1,34 +1,58 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {logout, loadUser} from '../../store/actions/authActions';
 
-function Navbar({title, icon}) {
-    return (
-        <div className="navbar bg-primary" style={{margin:"none"}}>
-            <img src='logoMain.png' id="logo" alt="" style={{width:"200px", margin:"none"}} />
-            <ul>
-                <li>
-                    <Link to = '/'>Home</Link>
-                </li>
-                <li>
-                    <Link to = '/register'>Register</Link>
-                </li>
-                <li>
-                    <Link to = '/login'>Login</Link>
-                </li>
-            </ul>
-        </div>
-    )
-}
 
-Navbar.propTypes = {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-}
+const Navbar = ({ auth:{isAuthenticated, user}, logout, loadUser }) => {
 
-Navbar.defaultProps = {
-    title: 'Contact Keeper',
-    icon: 'fas fa-id-card-alt'
-}
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
-export default Navbar
+  const onLogout = () => {
+    logout();
+    // clearContacts();
+  };
+
+  const authLinks = (
+    <Fragment>
+      <li>Hello {user && user.name}</li>
+      <li>
+        <a onClick={onLogout} href='localhost:3000/login'>
+          <i className='fas fa-sign-out-alt' />{' '}
+          <span className='hide-sm'>Logout</span>
+        </a>
+      </li>
+    </Fragment>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <li>
+        <Link to='/register'>Register</Link>
+      </li>
+      <li>
+        <Link to='/login'>Login</Link>
+      </li>
+    </Fragment>
+  );
+
+  return (
+    <div className='navbar bg-primary'>
+      <h1>
+        <Link to='/'>
+          <img src='logoMain.png' id="logo" alt="" style={{width:"200px", margin:"none"}} />
+        </Link>
+      </h1>
+      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.authReducer
+  })
+  
+  export default connect(mapStateToProps, {logout, loadUser})(Navbar)

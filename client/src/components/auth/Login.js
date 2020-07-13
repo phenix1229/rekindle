@@ -1,38 +1,88 @@
-import React, {useState, useContext} from 'react'
+import React, { useState, useEffect } from 'react';
+import {connect} from 'react-redux';
+import {setAlert} from '../../store/actions/alertActions';
+import {clearErrors, login} from '../../store/actions/authActions';
 
-function Login() {
-    const [user, setUser] = useState({
-        email:'',
-        password:''
-    })
 
-    const {email, password} = user;
-    
-    const onChange = e => setUser({...user, [e.target.name]: e.target.value});
+const Login = ({auth:{error, isAuthenticated}, props:{history}, login, clearErrors, setAlert}) => {
 
-    const onSubmit = e => {
-        e.preventDefault();
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
     }
 
-    return (
-        <div className="form-container">
-        <h1>
-            Account <span className="text-primary">Login</span>
-        </h1>
-        <form>
-            <div className="form-group">
-                <label htmlFor="email">Email Address</label>
-                <input type="email" name="email" value={email} onChange={onChange} />
-            </div>
-            <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="text" name="password" value={password} onChange={onChange} />
-            </div>
-            <input type="submit" value="Login" className="btn btn-primary btn-block" />
-        </form>
-            
-        </div>
-    )
-}
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, history]);
 
-export default Login;
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = user;
+
+  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = e => {
+    console.log('onsubmit clicked')
+    e.preventDefault();
+    if (email === '' || password === '') {
+      setAlert('Please fill in all fields', 'danger');
+    } else {
+      login({
+        email,
+        password
+      });
+    }
+  };
+
+  return (
+    <div className='form-container'>
+      <h1>
+        Account <span className='text-primary'>Login</span>
+      </h1>
+      <form onSubmit={onSubmit}>
+        <div className='form-group'>
+          <label htmlFor='email'>Email Address</label>
+          <input
+            id='email'
+            type='email'
+            name='email'
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='password'>Password</label>
+          <input
+            id='password'
+            type='password'
+            name='password'
+            value={password}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <input
+          type='submit'
+          value='Login'
+          className='btn btn-primary btn-block'
+          onClick={onSubmit}
+        />
+      </form>
+    </div>
+  );
+};
+
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.authReducer,
+  alert: state.alertReducer,
+  props: ownProps
+})
+
+export default connect(mapStateToProps, {login, clearErrors, setAlert})(Login)
