@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import BookSearch from '../userLibrary/BookSearch';
+import BookSearch from '../userLibrary/BookList';
 import LibraryFilter from '../userLibrary/LibraryFilter';
+// import Library from '../userLibrary/Library';
 import {loadUser} from '../../store/actions/authActions';
 
 

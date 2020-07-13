@@ -1,4 +1,4 @@
 {
-    "mongoURI":"mongodb://localhost/rekindle",
+    "mongoURI":"mongodb://localhost/rk-new",
     "jwtSecret":"secret"
 }

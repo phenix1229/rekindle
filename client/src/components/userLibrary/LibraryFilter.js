@@ -1,23 +1,22 @@
-import React, {useRef, useContext, useEffect} from 'react';
-import ContactContext from '../../context/contact/contactContext';
+import React, {useRef, useEffect} from 'react';
 
 function LibraryFilter() {
-    const contactContext = useContext(ContactContext);
-    const {filterContacts, clearFilter, filtered} = contactContext;
+    // const contactContext = useContext(ContactContext);
+    // const {filterContacts, clearFilter, filtered} = contactContext;
     const text = useRef('');
 
     useEffect(() => {
-        if(filtered === null){
-            text.current.value = '';
-        };
+        // if(filtered === null){
+        //     text.current.value = '';
+        // };
     })
 
     const onChange = e => {
-        if(text.current.value !== ''){
-            filterContacts(e.target.value);
-        } else {
-            clearFilter();
-        }
+        // if(text.current.value !== ''){
+        //     filterContacts(e.target.value);
+        // } else {
+        //     clearFilter();
+        // }
     };
 
     return (

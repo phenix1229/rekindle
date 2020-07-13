@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Library = require('../models/Library');
 const {check, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../middleware/auth');
+const axios = require('axios');
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -38,9 +40,12 @@ async (req, res) => {
         if(!isMatch){
             return res.status(400).json({msg:'Invalid credentials'})
         }
+        let library = await Library.findOne({owner: user._id});
+        
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                library: library.bookList
             }
         }
 

@@ -19,6 +19,7 @@ router.post('/',
         .isLength({min: 6})
 ],
 async (req, res) => {
+
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
@@ -61,7 +62,6 @@ async (req, res) => {
             expiresIn:360000
         }, (err, token) => {
             if(err) throw err;
-            console.log(token)
             res.json({token})
         } )
     } catch (err) {
