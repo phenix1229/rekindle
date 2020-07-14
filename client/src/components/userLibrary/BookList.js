@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import BookItem from './BookItem';
 import books from '../../data/books';
 
@@ -9,15 +10,17 @@ function BookList() {
         <>
         <h2 className="text-primary">Available Books</h2>
         <div className="bookList">
-        <ul>
         {books.map(book => 
-                <li>
-                    <BookItem key={book.id} book /></li>)
-    }
-        </ul>
+            <BookItem key={book.id} book={book} />)
+        }   
         </div>
         </>
     )
 }
 
-export default BookList;
+const mapStateToProps = (state, ownProps) => ({
+    auth: state.authReducer,
+    props: ownProps
+});
+
+export default connect(mapStateToProps)(BookList);

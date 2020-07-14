@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const {check, validationResult} = require('express-validator');
-
-// const User = require('../models/User');
-const Book = require('../models/Book');
+const jwt = require('jsonwebtoken');
+const config = require('../config/default.json');
+const Library = require('../models/Library');
+// const Books = require('../client/src/data/books');
 
 
 router.get('/', auth, async (req, res) => {
@@ -60,30 +61,24 @@ router.post(
 
 
 router.put('/:id', auth, async (req, res) => {
-  const {author, title} = req.body;
-
-  // Build book object
-  const searchFields = {};
-  if (author) searchFields.author = author;
-  if (title) searchFields.title = title;
+  const {book} = req.body;
 
   try {
-    let book = await Book.findById(req.params.id);
+    let library = await Library.findById(req.params.id);
 
-    if (!book) return res.status(404).json({msg: 'Book not found'});
+    if (!library) return res.status(404).json({msg: 'Library not found'});
 
     // Make sure user owns book
-    if (book.user.toString() !== req.user.id) {
+    if (library.owner.toString() !== req.user.id) {
       return res.status(401).json({msg: 'Not authorized'});
     }
 
-    book = await Book.findByIdAndUpdate(
+    library = await Library.findByIdAndUpdate(
       req.params.id,
-      {$set: searchFields},
-      {new: true},
+      {bookList: [...bookList, book]}
     );
 
-    res.json(book);
+    res.json(library);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

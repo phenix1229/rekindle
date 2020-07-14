@@ -1,9 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import jwt from 'jsonwebtoken';
 import BookItem from './BookItem';
 
-function Library({auth:{user}, bookState:{filtered}}) {
-    // if(user){
+function Library({bookState:{filtered}}) {
+    const token = localStorage.getItem('token');
+    const decoded = jwt.verify(token, 'secret');
+    const user = decoded.user;
+    
         if(user.library.length === 0){
             return <h4>Please add a book</h4>
         }
@@ -18,11 +22,10 @@ function Library({auth:{user}, bookState:{filtered}}) {
             }
             </>
         )
-    // }
 }
 
-const mapStateToProps = (state) => ({
-    auth: state.authReducer,
+const mapStateToProps = (state, ownProps) => ({
+    props: ownProps,
     bookState: state.bookReducer,
 });
 

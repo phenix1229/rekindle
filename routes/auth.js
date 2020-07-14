@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../middleware/auth');
-const axios = require('axios');
+
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -45,6 +45,7 @@ async (req, res) => {
         const payload = {
             user: {
                 id: user.id,
+                libraryId: library.id,
                 library: library.bookList
             }
         }

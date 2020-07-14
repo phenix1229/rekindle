@@ -31,7 +31,7 @@ import {
   };
 
   // Add Book
-  export const addBook = (userId, book) => async dispatch => {
+  export const addBook = (libraryId, book) => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ import {
     };
 
     try {
-      const res = await axios.put('/api/books', book, config);
+      const res = await axios.put(`/api/books/${libraryId}`, book, config);
 
       dispatch({
         type: ADD_BOOK,

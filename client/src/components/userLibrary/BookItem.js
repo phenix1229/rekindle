@@ -1,12 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import jwt from 'jsonwebtoken';
 import {removeBook, setCurrent, addBook} from '../../store/actions/bookActions';
 
 
-const BookItem = (book, {removeBook, setCurrent}) => {
+const BookItem = ({props:{book}, removeBook, setCurrent, addBook}) => {
     const {id, title, author, text} = book;
-    // const desc = text.slice(0, 30);
-
+    const desc = `${text.slice(0, 30)}...`;
+    const token = localStorage.getItem('token');
+    const decoded = jwt.verify(token, 'secret');
+    const user = decoded.user;
     const onRemove = () => {
         removeBook(id);
     };
@@ -18,20 +21,22 @@ const BookItem = (book, {removeBook, setCurrent}) => {
             </h3>
             <ul className="list">
                 <li>{author}</li>
-                <li>{text}</li>
+                <li>{desc}</li>
             </ul>
             <p>
-                 
-                    
-                    <button className="btn btn-dark btn-sm" onClick={() => addBook(book)}>Add</button>
-                <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>
+                {user.library.includes(id) ? 
+                    <button className="btn btn-dark btn-sm" onClick={() => setCurrent(book)}>Read</button> :
+                    <button className="btn btn-dark btn-sm" onClick={() => addBook(user.libraryId, book)}>Add</button>}
+                {user.library.includes(id) && <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>}
             </p>
         </div>
     )
 };
 
-const mapStateToProps = (state) => ({
-    auth: state.authReducer
+const mapStateToProps = (state, ownProps) => ({
+    auth: state.authReducer,
+    bookState: state.bookReducer,
+    props: ownProps
 });
 
 export default connect(mapStateToProps, {removeBook, setCurrent, addBook})(BookItem);
