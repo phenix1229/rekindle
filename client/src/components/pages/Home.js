@@ -6,7 +6,7 @@ import Library from '../userLibrary/Library';
 import {loadUser} from '../../store/actions/authActions';
 
 
-function Home({auth:{isAuthenticated, user}, props:{history}, loadUser}) {
+function Home({auth:{isAuthenticated}, props:{history}, loadUser}) {
     useEffect(() => {
         isAuthenticated ? loadUser() : 
             history.push('/login');
@@ -15,7 +15,7 @@ function Home({auth:{isAuthenticated, user}, props:{history}, loadUser}) {
     return (
         <div className="grid-2">
             <div className="bookList">
-                <BookList user={user}/>
+                <BookList />
             </div>
             <div>
                 <LibraryFilter />

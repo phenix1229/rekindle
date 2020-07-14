@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-  GET_BOOKS,
+  GET_LIBRARY,
+  GET_BOOKLIST,
   ADD_BOOK,
   REMOVE_BOOK,
   SET_CURRENT,
@@ -11,16 +12,37 @@ import {
   CLEAR_FILTER,
   BOOK_ERROR
 } from './types';
+import books from '../../data/books';
 
 
-  // Get Books
-  export const getBooks = () => async dispatch => {
+  // Get Library
+  export const getLibrary = () => async dispatch => {
     try {
       const res = await axios.get('/api/books');
 
       dispatch({
-        type: GET_BOOKS,
+        type: GET_LIBRARY,
         payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: BOOK_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+  
+  // Get BookList
+  export const getBookList = () => async dispatch => {
+    try {
+      const bookIds = [];
+      books.forEach(book => bookIds.push(book.id));
+      const res = await axios.get('/api/books');
+      const list = [];
+      bookIds.forEach(id => {if(!res.data.includes(id)) {list.push(id)}})
+      dispatch({
+        type: GET_BOOKLIST,
+        payload: list
       });
     } catch (err) {
       dispatch({
@@ -31,7 +53,7 @@ import {
   };
 
   // Add Book
-  export const addBook = (libraryId, book) => async dispatch => {
+  export const addBook = (book) => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -39,7 +61,7 @@ import {
     };
 
     try {
-      const res = await axios.put(`/api/books/${libraryId}`, book, config);
+      const res = await axios.put('/api/books', book, config);
 
       dispatch({
         type: ADD_BOOK,

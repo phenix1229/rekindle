@@ -5,15 +5,13 @@ const {check, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
 const config = require('../config/default.json');
 const Library = require('../models/Library');
-// const Books = require('../client/src/data/books');
+
 
 
 router.get('/', auth, async (req, res) => {
   try {
     
-    const books = await Book.find({user: req.user.id}).sort({
-      date: -1,
-    });
+    const books = await Library.find({owner: req.user.id})
     res.json(books);
   } catch (err) {
     console.error(err.message);
@@ -75,7 +73,8 @@ router.put('/:id', auth, async (req, res) => {
 
     library = await Library.findByIdAndUpdate(
       req.params.id,
-      {bookList: [...bookList, book]}
+      {$set: searchFields},
+      {new: true},
     );
 
     res.json(library);

@@ -1,4 +1,5 @@
-export const GET_BOOKS = 'GET_BOOKS';
+export const GET_LIBRARY = 'GET_LIBRARY';
+export const GET_BOOKLIST = 'GET_BOOKLIST';
 export const ADD_BOOK = 'ADD_BOOK';
 export const REMOVE_BOOK = 'REMOVE_BOOK';
 export const SET_CURRENT = 'SET_CURRENT';

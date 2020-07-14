@@ -21,8 +21,8 @@ function LibraryFilter({books:{filtered}}, filterBooks, clearFilter) {
 
     return (
         <form>
-            <h2 className="text-primary">Library</h2>
-            <input ref={text} type="text" placeholder="Search your library..." onChange={onChange} />
+            <h2 style={{marginBottom:'10px'}} className="text-primary">Library</h2>
+            <input style={{marginTop:'0px'}} ref={text} type="text" placeholder="Search your library..." onChange={onChange} />
         </form>
     )
 }

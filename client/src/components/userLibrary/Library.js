@@ -1,14 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import jwt from 'jsonwebtoken';
 import BookItem from './BookItem';
+import books from '../../data/books';
 
-function Library({bookState:{filtered}}) {
-    const token = localStorage.getItem('token');
-    const decoded = jwt.verify(token, 'secret');
-    const user = decoded.user;
+function Library({bookState:{filtered, userLibrary}}) {
     
-        if(user.library.length === 0){
+    
+        if(userLibrary === null || userLibrary.length === 0){
             return <h4>Please add a book</h4>
         }
     
@@ -17,7 +15,7 @@ function Library({bookState:{filtered}}) {
                 {filtered !== null ? filtered.map(book => 
                     <BookItem key={book.id} book={book} />
                     ) :
-                    user.library.map(book => 
+                    books.filter(book => userLibrary.includes(book.id)).map(book => 
                         <BookItem key={book.id} book={book} />)
             }
             </>

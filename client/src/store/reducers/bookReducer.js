@@ -1,5 +1,5 @@
 import {
-    GET_BOOKS,
+    GET_LIBRARY,
     ADD_BOOK,
     REMOVE_BOOK,
     SET_CURRENT,
@@ -8,11 +8,13 @@ import {
     FILTER_BOOKS,
     CLEAR_FILTER,
     BOOK_ERROR,
-    CLEAR_BOOKS
+    CLEAR_BOOKS,
+    GET_BOOKLIST
   } from '../actions/types';
 
   const initialState = {
-    books: null,
+    availableBooks: null,
+    userLibrary: [1],
     current: null,
     filtered: null,
     error: null
@@ -20,10 +22,16 @@ import {
   
   export default (state = initialState, action) => {
     switch (action.type) {
-      case GET_BOOKS:
+      case GET_LIBRARY:
         return {
           ...state,
-          books: action.payload,
+          userLibrary: action.payload,
+          loading: false
+        };
+      case GET_BOOKLIST:
+        return {
+          ...state,
+          availableBooks: action.payload,
           loading: false
         };
       case ADD_BOOK:
