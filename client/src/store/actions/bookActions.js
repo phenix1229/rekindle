@@ -22,7 +22,7 @@ import books from '../../data/books';
 
       dispatch({
         type: GET_LIBRARY,
-        payload: res.data
+        payload: res.data[0].bookList
       });
     } catch (err) {
       dispatch({
@@ -39,7 +39,7 @@ import books from '../../data/books';
       books.forEach(book => bookIds.push(book.id));
       const res = await axios.get('/api/books');
       const list = [];
-      bookIds.forEach(id => {if(!res.data.includes(id)) {list.push(id)}})
+      bookIds.forEach(id => {if(!res.data[0].bookList.includes(id)) {list.push(id)}})
       dispatch({
         type: GET_BOOKLIST,
         payload: list
@@ -53,7 +53,8 @@ import books from '../../data/books';
   };
 
   // Add Book
-  export const addBook = (book) => async dispatch => {
+  export const addBook = (library, book) => async dispatch => {
+    console.log(library, book)
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -61,12 +62,17 @@ import books from '../../data/books';
     };
 
     try {
-      const res = await axios.put('/api/books', book, config);
+      const res = await axios.put(`/api/books/${library}`, {book}, config);
 
+      setTimeout(() => {
+        getBookList()
+      }, 100);
       dispatch({
         type: ADD_BOOK,
-        payload: res.data
+        payload: book
       });
+
+      // getBookList();
     } catch (err) {
       dispatch({
         type: BOOK_ERROR,

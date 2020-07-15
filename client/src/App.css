@@ -417,6 +417,13 @@ table th {
   overflow: scroll;
 }
 
+.library {
+  display: flex;
+  flex-direction: column;
+  height: 395px;
+  overflow: scroll;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .hide-sm {

@@ -12,7 +12,7 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({msg:'server error'});
@@ -45,8 +45,6 @@ async (req, res) => {
         const payload = {
             user: {
                 id: user.id,
-                libraryId: library.id,
-                library: library.bookList
             }
         }
 

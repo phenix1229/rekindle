@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import BookItem from './BookItem';
-import {getBookList} from '../../store/actions/bookActions';
+import {getLibrary} from '../../store/actions/bookActions';
 import books from '../../data/books';
 
 
-function BookList({bookState:{availableBooks}, getBookList}) {
-    // useEffect(
-        getBookList()
-    // )
+function BookList({bookState:{availableBooks}, getLibrary}) {
+    useEffect(() => {
+        getLibrary();
+    }, [getLibrary])
 
     return (
         <>
@@ -23,8 +23,7 @@ function BookList({bookState:{availableBooks}, getBookList}) {
 }
 
 const mapStateToProps = (state) => ({
-    bookState: state.bookReducer,
-    // props: ownProps
+    bookState: state.bookReducer
 });
 
-export default connect(mapStateToProps, {getBookList})(BookList);
+export default connect(mapStateToProps, {getLibrary})(BookList);

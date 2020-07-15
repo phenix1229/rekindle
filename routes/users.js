@@ -43,18 +43,17 @@ async (req, res) => {
 
         await user.save()
             .then(user => {
-                    library = new Library();
-                    library.owner = user.id;
-                    library.save();
-                }
-            );
+                library = new Library();
+                library.owner = user.id;
+                library.save();
+                user.library = library.id;
+                user.save();
+                return user;
+            })
 
         const payload = {
             user: {
                 id: user.id
-            },
-            library: {
-                id: library.id
             }
         }
 

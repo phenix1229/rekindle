@@ -60,21 +60,16 @@ router.post(
 
 router.put('/:id', auth, async (req, res) => {
   const {book} = req.body;
+  console.log(book)
 
   try {
     let library = await Library.findById(req.params.id);
 
     if (!library) return res.status(404).json({msg: 'Library not found'});
 
-    // Make sure user owns book
-    if (library.owner.toString() !== req.user.id) {
-      return res.status(401).json({msg: 'Not authorized'});
-    }
-
     library = await Library.findByIdAndUpdate(
       req.params.id,
-      {$set: searchFields},
-      {new: true},
+      {bookList: [...library.bookList, book]},
     );
 
     res.json(library);

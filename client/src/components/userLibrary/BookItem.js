@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {removeBook, setCurrent, addBook} from '../../store/actions/bookActions';
 
 
-const BookItem = ({props:{book}, bookState:{userLibrary}, removeBook, setCurrent, addBook}) => {
+const BookItem = ({props:{book}, auth:{user}, bookState:{userLibrary}, removeBook, setCurrent, addBook}) => {
     const {id, title, author, text} = book;
     const desc = `${text.slice(0, 30)}...`;
     const libraryExists = userLibrary !== null && userLibrary.length !== 0;
@@ -24,7 +24,7 @@ const BookItem = ({props:{book}, bookState:{userLibrary}, removeBook, setCurrent
             <p>
                 {(libraryExists && userLibrary.includes(id)) ? 
                     <button className="btn btn-dark btn-sm" onClick={() => setCurrent(book)}>Read</button> :
-                    <button className="btn btn-dark btn-sm" onClick={() => addBook(book)}>Add</button>}
+                    <button className="btn btn-dark btn-sm" onClick={() => addBook(user.library, book.id)}>Add</button>}
                 {userLibrary.includes(id) && <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>}
             </p>
         </div>

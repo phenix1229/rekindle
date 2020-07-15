@@ -11,14 +11,14 @@ function Library({bookState:{filtered, userLibrary}}) {
         }
     
         return (
-            <>
+            <div className="library">
                 {filtered !== null ? filtered.map(book => 
                     <BookItem key={book.id} book={book} />
                     ) :
                     books.filter(book => userLibrary.includes(book.id)).map(book => 
                         <BookItem key={book.id} book={book} />)
             }
-            </>
+            </div>
         )
 }
 

@@ -28,7 +28,6 @@ const Login = ({auth:{error, isAuthenticated}, props:{history}, login, clearErro
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
-    console.log('onsubmit clicked')
     e.preventDefault();
     if (email === '' || password === '') {
       setAlert('Please fill in all fields', 'danger');

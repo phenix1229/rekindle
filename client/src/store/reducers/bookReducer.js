@@ -14,7 +14,7 @@ import {
 
   const initialState = {
     availableBooks: null,
-    userLibrary: [1],
+    userLibrary: null,
     current: null,
     filtered: null,
     error: null
@@ -37,7 +37,8 @@ import {
       case ADD_BOOK:
         return {
           ...state,
-          books: [action.payload, ...state.books],
+          userLibrary: [action.payload, ...state.userLibrary],
+          availableBooks: [...state.availableBooks.slice(0,state.availableBooks.indexOf(action.payload), ...state.availableBooks.slice(state.availableBooks.indexOf(action.payload) +1))],
           loading: false
         };
       // case UPDATE_BOOK:
