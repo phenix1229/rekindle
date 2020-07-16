@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {removeBook, setCurrent, addBook} from '../../store/actions/bookActions';
 
 
-const BookItem = ({props:{book}, bookState:{userLibrary}, removeBook, setCurrent, addBook}) => {
+const BookItem = ({props:{book}, bookState:{userLibrary},auth:{user}, removeBook, setCurrent, addBook}) => {
     const {id, title, author, text} = book;
     const desc = `${text.slice(0, 30)}...`;
     
@@ -23,7 +23,7 @@ const BookItem = ({props:{book}, bookState:{userLibrary}, removeBook, setCurrent
             <p>
                 {userLibrary.includes(id) ? 
                     <button className="btn btn-dark btn-sm" onClick={() => setCurrent(book)}>Read</button> :
-                    <button className="btn btn-dark btn-sm" onClick={() => addBook(userLibrary, book.id)}>Add</button>}
+                    <button className="btn btn-dark btn-sm" onClick={() => addBook(user.library, book.id)}>Add</button>}
                 {userLibrary.includes(id) && <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>}
             </p>
         </div>
@@ -32,6 +32,7 @@ const BookItem = ({props:{book}, bookState:{userLibrary}, removeBook, setCurrent
 
 const mapStateToProps = (state, ownProps) => ({
     bookState: state.bookReducer,
+    auth: state.authReducer,
     props: ownProps
 });
 

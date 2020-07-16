@@ -4,10 +4,9 @@ import BookList from '../userLibrary/BookList';
 import LibraryFilter from '../userLibrary/LibraryFilter';
 import Library from '../userLibrary/Library';
 import {loadUser} from '../../store/actions/authActions';
-import {getLibrary, getBookList} from '../../store/actions/bookActions';
 
 
-function Home({auth:{isAuthenticated},bookState:{userLibrary}, props:{history}, loadUser, getBookList, getLibrary}) {
+function Home({auth:{isAuthenticated}, props:{history}, loadUser}) {
     useEffect(() => {
         if (isAuthenticated) {
             loadUser();  
@@ -32,8 +31,7 @@ function Home({auth:{isAuthenticated},bookState:{userLibrary}, props:{history}, 
 
 const mapStateToProps = (state, ownProps) => ({
     auth: state.authReducer,
-    bookState: state.bookReducer,
     props: ownProps
 })
 
-export default connect(mapStateToProps, {loadUser, getBookList, getLibrary})(Home)
+export default connect(mapStateToProps, {loadUser})(Home)
