@@ -28,7 +28,7 @@ import books from '../../data/books';
     } catch (err) {
       dispatch({
         type: BOOK_ERROR,
-        payload: err
+        payload: err.response.msg
       });
     }
   };
@@ -48,7 +48,7 @@ import books from '../../data/books';
     } catch (err) {
       dispatch({
         type: BOOK_ERROR,
-        payload: err
+        payload: err.response.msg
       });
     }
   };
@@ -66,7 +66,7 @@ import books from '../../data/books';
 
       dispatch({
         type: ADD_BOOK,
-        payload: book
+        payload: {book}
       });
 
     } catch (err) {

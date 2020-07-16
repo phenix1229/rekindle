@@ -37,18 +37,10 @@ import {
       case ADD_BOOK:
         return {
           ...state,
-          userLibrary: [action.payload, ...state.userLibrary],
-          availableBooks: [...state.availableBooks.slice(0,state.availableBooks.indexOf(action.payload), ...state.availableBooks.slice(state.availableBooks.indexOf(action.payload) +1))],
+          userLibrary: [action.payload.book, ...state.userLibrary],
+          availableBooks: state.availableBooks.filter(book => book !== action.payload.book),
           loading: false
         };
-      // case UPDATE_BOOK:
-      //   return {
-      //     ...state,
-      //     books: state.books.map(book =>
-      //       book.id === action.payload._id ? action.payload : book
-      //     ),
-      //     loading: false
-      //   };
       case REMOVE_BOOK:
         return {
           ...state,

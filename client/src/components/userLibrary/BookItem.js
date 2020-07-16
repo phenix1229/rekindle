@@ -6,6 +6,10 @@ import {removeBook, setCurrent, addBook} from '../../store/actions/bookActions';
 const BookItem = ({props:{book}, bookState:{userLibrary},auth:{user}, removeBook, setCurrent, addBook}) => {
     const {id, title, author, text} = book;
     const desc = `${text.slice(0, 30)}...`;
+
+    const onAdd = () => {
+        addBook(user.library, book.id);
+    }
     
     const onRemove = () => {
         removeBook(id);
@@ -23,7 +27,7 @@ const BookItem = ({props:{book}, bookState:{userLibrary},auth:{user}, removeBook
             <p>
                 {userLibrary.includes(id) ? 
                     <button className="btn btn-dark btn-sm" onClick={() => setCurrent(book)}>Read</button> :
-                    <button className="btn btn-dark btn-sm" onClick={() => addBook(user.library, book.id)}>Add</button>}
+                    <button className="btn btn-dark btn-sm" onClick={onAdd}>Add</button>}
                 {userLibrary.includes(id) && <button className="btn btn-danger btn-sm" onClick={onRemove}>Remove</button>}
             </p>
         </div>
