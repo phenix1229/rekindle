@@ -2,17 +2,14 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const {check, validationResult} = require('express-validator');
-const jwt = require('jsonwebtoken');
-const config = require('../config/default.json');
 const Library = require('../models/Library');
 
 
 
 router.get('/', auth, async (req, res) => {
   try {
-    
-    const books = await Library.find({owner: req.user.id})
-    res.json(books);
+    const library = await Library.find({owner: req.user.id})
+    res.json(library[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -7,19 +7,15 @@ import {loadUser} from '../../store/actions/authActions';
 import {getLibrary, getBookList} from '../../store/actions/bookActions';
 
 
-function Home({auth:{isAuthenticated}, props:{history}, loadUser, getBookList, getLibrary}) {
+function Home({auth:{isAuthenticated},bookState:{userLibrary}, props:{history}, loadUser, getBookList, getLibrary}) {
     useEffect(() => {
         if (isAuthenticated) {
             loadUser();  
-            getLibrary();
-            setTimeout(() => {
-                getBookList();
-            }, 200); 
         } else {
             history.push('/login');
-        }
+        };
         // eslint-disable-next-line
-    }, [getBookList, getLibrary, isAuthenticated, history]);
+    }, [isAuthenticated]);
 
     return (
         <div className="grid-2">

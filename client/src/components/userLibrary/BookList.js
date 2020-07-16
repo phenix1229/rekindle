@@ -1,20 +1,21 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
+import {getBookList} from '../../store/actions/bookActions';
 import BookItem from './BookItem';
-import {getLibrary} from '../../store/actions/bookActions';
 import books from '../../data/books';
 
 
-function BookList({bookState:{availableBooks}, getLibrary}) {
+function BookList({bookState:{availableBooks}, getBookList}) {
     useEffect(() => {
-        getLibrary();
-    }, [getLibrary])
-
+        setTimeout(() => {
+            getBookList()
+        }, 200);
+    }, [])
     return (
         <>
         <h2 className="text-primary">Available Books</h2>
         <div className="bookList">
-        {availableBooks && books.filter(book => availableBooks.includes(book.id)).map(book => 
+        {books.filter(book => availableBooks.includes(book.id)).map(book => 
             <BookItem key={book.id} book={book} />)
         }   
         </div>
@@ -22,8 +23,9 @@ function BookList({bookState:{availableBooks}, getLibrary}) {
     )
 }
 
-const mapStateToProps = (state) => ({
-    bookState: state.bookReducer
+const mapStateToProps = (state, ownProps) => ({
+    bookState: state.bookReducer,
+    props: ownProps
 });
 
-export default connect(mapStateToProps, {getLibrary})(BookList);
+export default connect(mapStateToProps, {getBookList})(BookList);

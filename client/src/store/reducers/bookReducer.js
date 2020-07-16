@@ -13,7 +13,7 @@ import {
   } from '../actions/types';
 
   const initialState = {
-    availableBooks: null,
+    availableBooks: [],
     userLibrary: null,
     current: null,
     filtered: null,
