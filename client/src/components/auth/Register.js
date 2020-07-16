@@ -1,13 +1,23 @@
-import React, {useState, useContext} from 'react';
-import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {clearErrors, register} from '../../store/actions/authActions';
+import {setAlert} from '../../store/actions/alertActions';
 
-function Register() {
-    const alertContext = useContext(AlertContext);
-    const authContext = useContext(AuthContext);
 
-    const {setAlert} = alertContext;
-    const {register} = authContext;
+const Register = ({auth:{isAuthenticated, error}, props:{history}, register, clearErrors, setAlert}) => {
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+    }
+
+    if (error === 'User already exists') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, history]
+  );
 
     const [user, setUser] = useState({
         name:'',
@@ -22,11 +32,17 @@ function Register() {
 
     const onSubmit = e => {
         e.preventDefault();
-        register({
-            name,
-            email,
-            password
-        })
+        if (name === '' || email === '' || password === '') {
+            setAlert('Please enter all fields', 'danger');
+          } else if (password !== password2) {
+            setAlert('Passwords do not match', 'danger');
+          } else {
+            register({
+              name,
+              email,
+              password
+            });
+          }
     }
 
     return (
@@ -57,5 +73,10 @@ function Register() {
         </div>
     )
 }
+const mapStateToProps = (state, ownProps) => ({
+    auth: state.authReducer,
+    alert: state.alertReducer,
+    props: ownProps
+})
 
-export default Register
+export default connect(mapStateToProps, {register, clearErrors, setAlert})(Register);

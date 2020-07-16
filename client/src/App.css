@@ -385,6 +385,15 @@ table th {
   margin-right: 0.6rem;
 }
 
+.footer {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  padding: 15px 0px 15px 30px;
+  border-top: 1px solid rgba(231, 197, 247, .5);
+  width: 100vw;
+}
+
 /* Animation (Add After) */
 .item-enter {
   opacity: 0;
@@ -399,6 +408,20 @@ table th {
 .item-exit-active {
   opacity: 0;
   transition: opacity 1000ms ease-in;
+}
+
+.bookList {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  overflow: scroll;
+}
+
+.library {
+  display: flex;
+  flex-direction: column;
+  height: 395px;
+  overflow: scroll;
 }
 
 /* Mobile Styles */

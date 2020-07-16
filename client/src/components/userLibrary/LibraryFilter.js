@@ -1,9 +1,8 @@
-import React, {useRef, useContext, useEffect} from 'react';
-import ContactContext from '../../context/contact/contactContext';
+import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {filterBooks, clearFilter} from '../../store/actions/bookActions';
 
-function LibraryFilter() {
-    const contactContext = useContext(ContactContext);
-    const {filterContacts, clearFilter, filtered} = contactContext;
+function LibraryFilter({books:{filtered}}, filterBooks, clearFilter) {
     const text = useRef('');
 
     useEffect(() => {
@@ -14,7 +13,7 @@ function LibraryFilter() {
 
     const onChange = e => {
         if(text.current.value !== ''){
-            filterContacts(e.target.value);
+            filterBooks(e.target.value);
         } else {
             clearFilter();
         }
@@ -22,9 +21,14 @@ function LibraryFilter() {
 
     return (
         <form>
-            <input ref={text} type="text" placeholder="Search your library..." onChange={onChange} />
+            <h2 style={{marginBottom:'10px'}} className="text-primary">Library</h2>
+            <input style={{marginTop:'0px'}} ref={text} type="text" placeholder="Search your library..." onChange={onChange} />
         </form>
     )
 }
 
-export default LibraryFilter
+const mapStateToProps = (state) => ({
+    books: state.bookReducer
+});
+
+export default connect(mapStateToProps, {filterBooks, clearFilter})(LibraryFilter);
