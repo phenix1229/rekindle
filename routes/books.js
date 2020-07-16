@@ -55,7 +55,27 @@ router.post(
 );
 
 
-router.put('/:id', auth, async (req, res) => {
+router.put('/add/:id', auth, async (req, res) => {
+  const {book} = req.body;
+
+  try {
+    let library = await Library.findById(req.params.id);
+
+    if (!library) return res.status(404).json({msg: 'Library not found'});
+
+    library = await Library.findByIdAndUpdate(
+      req.params.id,
+      {bookList: [...library.bookList, book]},
+    );
+
+    res.json(library);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+router.put('/remove/:id', auth, async (req, res) => {
   const {book} = req.body;
   console.log(book)
 
@@ -66,7 +86,7 @@ router.put('/:id', auth, async (req, res) => {
 
     library = await Library.findByIdAndUpdate(
       req.params.id,
-      {bookList: [...library.bookList, book]},
+      {bookList: library.bookList.filter(bk => bk !== book)},
     );
 
     res.json(library);

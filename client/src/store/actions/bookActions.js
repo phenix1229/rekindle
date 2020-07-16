@@ -10,7 +10,8 @@ import {
   FILTER_BOOKS,
   CLEAR_BOOKS,
   CLEAR_FILTER,
-  BOOK_ERROR
+  BOOK_ERROR,
+  REMOVE_ALERT
 } from './types';
 import books from '../../data/books';
 
@@ -62,7 +63,7 @@ import books from '../../data/books';
     };
 
     try {
-      await axios.put(`/api/books/${library}`, {book}, config);
+      await axios.put(`/api/books/add/${library}`, {book}, config);
 
       dispatch({
         type: ADD_BOOK,
@@ -76,16 +77,23 @@ import books from '../../data/books';
       });
     }
   };
+  
+  // Remove Book
+  export const removeBook = (library, book) => async dispatch => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-  // Remove book
-  export const removeBook = id => async dispatch => {
     try {
-      await axios.delete(`/api/books/${id}`);
+      await axios.put(`/api/books/remove/${library}`, {book}, config);
 
       dispatch({
         type: REMOVE_BOOK,
-        payload: id
+        payload: {book}
       });
+
     } catch (err) {
       dispatch({
         type: BOOK_ERROR,
@@ -93,6 +101,7 @@ import books from '../../data/books';
       });
     }
   };
+
 
   // Update Book
   export const updateBook = book => async dispatch => {

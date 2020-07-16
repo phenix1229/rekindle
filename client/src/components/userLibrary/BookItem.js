@@ -12,7 +12,7 @@ const BookItem = ({props:{book}, bookState:{userLibrary},auth:{user}, removeBook
     }
     
     const onRemove = () => {
-        removeBook(id);
+        removeBook(user.library, book.id);
     };
 
     return (
